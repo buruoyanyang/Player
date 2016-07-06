@@ -8,13 +8,21 @@ import buruoyanyang.player.managers.CacheManager;
 
 public class InitActivity extends BaseActivity {
 
+    CacheManager mCacheManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
-        setAllowFullScreen(false);
-        setSteepStatusBar(false);
+        initClass();
+
     }
+
+    public void initClass() {
+        setAllowFullScreen(true);
+        setSteepStatusBar(true);
+        mCacheManager = CacheManager.get(this);
+    }
+
 
     @Override
     public void initParams(Bundle params) {
@@ -33,7 +41,6 @@ public class InitActivity extends BaseActivity {
 
     @Override
     public void initView(View view) {
-
 
     }
 }
