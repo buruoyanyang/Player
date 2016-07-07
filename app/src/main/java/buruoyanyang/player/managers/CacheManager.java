@@ -34,7 +34,7 @@ public class CacheManager {
 	public static final int TIME_DAY = TIME_HOUR * 24;
 	private static final int MAX_SIZE = 1000 * 1000 * 50; // 50 mb
 	private static final int MAX_COUNT = Integer.MAX_VALUE; // 不限制存放数据的数量
-	private static Map<String, CacheManager> mInstanceMap = new HashMap<String, CacheManager>();
+	private static Map<String, CacheManager> mInstanceMap = new HashMap<>();
 	private ACacheManager mCache;
 
 	public static CacheManager get(Context ctx) {
@@ -50,9 +50,9 @@ public class CacheManager {
 		return get(cacheDir, MAX_SIZE, MAX_COUNT);
 	}
 
-	public static CacheManager get(Context ctx, long max_zise, int max_count) {
+	public static CacheManager get(Context ctx, long max_sise, int max_count) {
 		File f = new File(ctx.getCacheDir(), "CacheManager");
-		return get(f, max_zise, max_count);
+		return get(f, max_sise, max_count);
 	}
 
 	public static CacheManager get(File cacheDir, long max_zise, int max_count) {

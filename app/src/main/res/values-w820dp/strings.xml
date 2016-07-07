@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mobile_warning">正在使用移动流量哦~</string>
+    <string name="notnet_warning">暂未发现可用网络哦~</string>
+</resources>
