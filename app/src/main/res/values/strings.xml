@@ -9,4 +9,7 @@
     <string name="first_init_nonet_warning">初始化失败，请链接网络~</string>
     <string name="nonet_title">无网络链接</string>
     <string name="open_wifi">现在就去打开WiFi？</string>
+    <string name="app_version">1.0</string>
+    <string name="app_id">74</string>
+    <string name="ase_key">dd358748fcabdda1</string>
 </resources>

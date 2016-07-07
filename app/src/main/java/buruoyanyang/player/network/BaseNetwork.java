@@ -8,6 +8,7 @@ package buruoyanyang.player.network;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.concurrent.Exchanger;
 import java.util.concurrent.TimeUnit;
 
 import buruoyanyang.player.utils.AESDecodeUtils;
@@ -96,15 +97,21 @@ public class BaseNetwork {
             if (!response.isSuccessful()) {
                 return SERVER_IS_TIMEOUT;
             } else {
+                //先进行json解析
+                String jsonStr = response.body().string();
                 Gson gson = new Gson();
-                Data resultData = gson.fromJson(response.body().string(), Data.class);
+                Data resultData = gson.fromJson(jsonStr, Data.class);
+                response.close();
                 return AESDecodeUtils.Decrypt(resultData.data, key);
             }
-        } catch (IOException io) {
+        }catch (IOException io)
+        {
             return IO_FAIL;
         }
+        catch (Exception e) {
+            return UNKNOWN_ERROR;
+        }
     }
-
     static class Data {
         String data;
     }

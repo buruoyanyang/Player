@@ -2,4 +2,7 @@
 <resources>
     <string name="mobile_warning">正在使用移动流量哦~</string>
     <string name="notnet_warning">暂未发现可用网络哦~</string>
+    <string name="app_version">1.0</string>
+    <string name="app_id">74</string>
+    <string name="ase_key">dd358748fcabdda1</string>
 </resources>

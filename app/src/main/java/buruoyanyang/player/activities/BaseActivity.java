@@ -12,6 +12,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * buruoyanyang.player.activities
  * author xiaofeng

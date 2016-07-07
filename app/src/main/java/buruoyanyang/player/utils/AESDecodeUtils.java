@@ -23,6 +23,7 @@ public class AESDecodeUtils {
             SecretKeySpec newKey = new SecretKeySpec(keyBytes, "AES");
             //设置加密类型
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+            cipher.init(Cipher.DECRYPT_MODE,newKey,ivSpec);
             //Base64解密
             byte[] encrypted = Base64.decode(src, Base64.DEFAULT);
             cipherData = cipher.doFinal(encrypted);
@@ -33,3 +34,38 @@ public class AESDecodeUtils {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
