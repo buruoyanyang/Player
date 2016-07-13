@@ -196,6 +196,7 @@ public class InitActivity extends BaseActivity {
     public void startNextActivity(InitOKMsg im) {
         //跳转
         Toast.makeText(InitActivity.this, "准备跳转", Toast.LENGTH_SHORT).show();
+        startActivity(mainActivity.class);
     }
 
     @SuppressLint("InflateParams")

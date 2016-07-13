@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="buruoyanyang.player.activities.mainActivity">
+    <include layout="@layout/title_bar_layout"
+        android:id="@+id/title_bar"/>
+    <com.shizhefei.view.indicator.FixedIndicatorView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/indicator"
+        android:layout_above="@+id/main_help_tv0"/>
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="5dp"
+        android:id="@+id/main_help_tv0"
+        android:layout_alignParentBottom="true"/>
+    <com.shizhefei.view.viewpager.SViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_bar"
+        android:layout_above="@id/indicator"/>
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
