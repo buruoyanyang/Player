@@ -25,19 +25,24 @@ import okhttp3.Response;
  */
 //使用EventBus统一管理线程
 public class BaseNetwork {
+    private OkHttpClient client = new OkHttpClient.Builder().connectTimeout(8L, TimeUnit.SECONDS).readTimeout(30L, TimeUnit.SECONDS).writeTimeout(15L, TimeUnit.SECONDS).build();
     public static final String SERVER_IS_TIMEOUT = "0";
     public static final String IO_FAIL = "1";
     public static final String UNKNOWN_ERROR = "5";
 
-    public static String httpGetBase(String url) {
-        if (url.isEmpty()) {
-            return null;
-        }
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
+    private static class Holder {
+        public static BaseNetwork sNetwork = new BaseNetwork();
+    }
+
+    private BaseNetwork() {
+    }
+
+    public static BaseNetwork newNetWork() {
+        return Holder.sNetwork;
+    }
+
+
+    public String httpGetBase(String url) {
         Request request = new Request
                 .Builder()
                 .url(url)
@@ -55,13 +60,7 @@ public class BaseNetwork {
         }
     }
 
-    public static String getInfoWithAES(String url, String key) {
-        OkHttpClient client = new OkHttpClient
-                .Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
+    public String getInfoWithAES(String url, String key) {
         Request request = new Request
                 .Builder()
                 .url(url)
@@ -72,21 +71,14 @@ public class BaseNetwork {
             if (!response.isSuccessful()) {
                 return SERVER_IS_TIMEOUT;
             } else {
-                //解密
                 return AESDecodeUtils.Decrypt(response.body().string(), key);
             }
-        } catch (Exception ex) {
+        } catch (IOException e) {
             return IO_FAIL;
         }
     }
 
-    public static String getInfoWithDataFormat(String url, String key) {
-        OkHttpClient client = new OkHttpClient
-                .Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
+    public String getInfoWithDataFormat(String url, String key) {
         Request request = new Request
                 .Builder()
                 .url(url)
@@ -97,22 +89,58 @@ public class BaseNetwork {
             if (!response.isSuccessful()) {
                 return SERVER_IS_TIMEOUT;
             } else {
-                //先进行json解析
                 String jsonStr = response.body().string();
                 Gson gson = new Gson();
                 Data resultData = gson.fromJson(jsonStr, Data.class);
                 response.close();
                 return AESDecodeUtils.Decrypt(resultData.data, key);
+
             }
-        }catch (IOException io)
-        {
+        } catch (IOException e) {
             return IO_FAIL;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return UNKNOWN_ERROR;
         }
     }
-    static class Data {
+
+    class Data {
         String data;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

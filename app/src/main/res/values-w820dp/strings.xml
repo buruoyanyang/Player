@@ -5,4 +5,5 @@
     <string name="app_version">1.0</string>
     <string name="app_id">74</string>
     <string name="ase_key">dd358748fcabdda1</string>
+    <string name="fail_mkdir">创建主目录失败，请检查您的内存卡</string>
 </resources>

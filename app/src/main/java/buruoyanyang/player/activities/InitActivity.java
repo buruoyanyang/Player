@@ -1,5 +1,6 @@
 package buruoyanyang.player.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
@@ -29,8 +30,10 @@ import buruoyanyang.player.R;
 import buruoyanyang.player.managers.CacheManager;
 import buruoyanyang.player.messages.InfoMsg;
 import buruoyanyang.player.messages.InitOKMsg;
+import buruoyanyang.player.models.LoginModel;
 import buruoyanyang.player.models.WeChatModel;
 import buruoyanyang.player.network.BaseNetwork;
+import buruoyanyang.player.utils.FileReadUtils;
 import buruoyanyang.player.utils.NetworkUtils;
 
 //需要在initActivity做的事情
@@ -81,7 +84,44 @@ public class InitActivity extends BaseActivity {
             }
         } else {
             //请求数据
+            if (isFirstInit) {
+                //添加文件夹，准备跳转
+                addDir();
+            } else {
+                //读取账号信息
+                getUIFromSD();
+            }
             initData();
+        }
+    }
+
+
+    private void addDir() {
+        File appDir = new File(Environment.getExternalStorageDirectory(), "bzvideo");
+        if (!appDir.exists()) {
+            if (appDir.mkdir()) {
+                Toast.makeText(InitActivity.this, R.string.fail_mkdir, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void getUIFromSD() {
+        File appDir = new File(Environment.getExternalStorageDirectory(), "bzvideo");
+        if (appDir.exists()) {
+            File file = new File(appDir, "UI");
+            if (file.exists()) {
+                FileReadUtils readUtils = FileReadUtils.newReadUtils();
+                String responseData = readUtils.readUI(file, getApplicationContext());
+                Gson gson = new Gson();
+                LoginModel loginModel = gson.fromJson(responseData, LoginModel.class);
+                String tel = loginModel.getTel();
+                String password = loginModel.getPassword();
+                boolean vip = loginModel.isVip();
+                //缓存
+                mCacheManager.put("tel", tel);
+                mCacheManager.put("password", password);
+                mCacheManager.put("vip", vip);
+            }
         }
     }
 
@@ -119,15 +159,19 @@ public class InitActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void getInfoFromServer(InfoMsg im) {
         Gson gson;
-        String result = BaseNetwork.getInfoWithDataFormat("http://115.29.190.54:99/category.aspx?appid=" + appId + "&version=" + appVersion, getString(R.string.ase_key));
+        BaseNetwork baseNetwork = BaseNetwork.newNetWork();
+        String result = baseNetwork.getInfoWithDataFormat("http://115.29.190.54:99/category.aspx?appid=" + appId + "&version=" + appVersion, getString(R.string.ase_key));
         if (result.length() < 10) {
             //异常
+            Log.d(getPackageName(), result + " 异常");
         } else {
             mCacheManager.put("cateList", result);
-            Log.d(getPackageName(),result);
+            Log.d(getPackageName(), result);
         }
-        result = BaseNetwork.httpGetBase("http://115.29.190.54:99/idfa.aspx?idfa=" + deviceId);
+        result = baseNetwork.httpGetBase("http://115.29.190.54:99/idfa.aspx?idfa=" + deviceId);
+        assert result != null;
         if (result.length() < 10) {
+            Log.d(getPackageName(), result + " 异常");
             //异常
         } else {
             //处理
@@ -135,24 +179,26 @@ public class InitActivity extends BaseActivity {
             WeChatModel model = gson.fromJson(result, WeChatModel.class);
             mCacheManager.put("weChatId", model.getWx());
             mCacheManager.put("weChatBanner", model.getBanner());
-//            Log.d(getPackageName(),result);
+            Log.d(getPackageName(), result);
         }
-        result = BaseNetwork.getInfoWithDataFormat("http://115.29.190.54:99/Home.aspx?appid=" + appId + "&version" + appVersion, getString(R.string.ase_key));
+        result = baseNetwork.getInfoWithDataFormat("http://115.29.190.54:99/Home.aspx?appid=" + appId + "&version=" + appVersion, getString(R.string.ase_key));
         if (result.length() < 10) {
+            Log.d(getPackageName(), result + " 异常");
         } else {
             mCacheManager.put("homeList", result);
-//            Log.d(getPackageName(),result);
+            Log.d(getPackageName(), result);
         }
         EventBus.getDefault().post(new InitOKMsg());
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void startNextActivity(InitOKMsg im)
-    {
+    public void startNextActivity(InitOKMsg im) {
         //跳转
-        Toast.makeText(InitActivity.this,"准备跳转",Toast.LENGTH_SHORT).show();
+        Toast.makeText(InitActivity.this, "准备跳转", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("InflateParams")
     private void showDialog() {
         AlertDialog dialog = new AlertDialog.Builder(this).create();
         View view = getLayoutInflater().inflate(R.layout.offline_dialog_layout, null);
@@ -194,7 +240,7 @@ public class InitActivity extends BaseActivity {
 
 
     private void getFirstInfo() {
-        File appDir = new File(Environment.getExternalStorageDirectory(), "biezhi");
+        File appDir = new File(Environment.getExternalStorageDirectory(), "bzvideo");
         isFirstInit = !appDir.exists();
     }
 
@@ -227,7 +273,6 @@ public class InitActivity extends BaseActivity {
             case 2:
                 isNotNet = true;
                 //跳转
-
 //                dialog.dismiss();
         }
     }
