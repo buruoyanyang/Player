@@ -71,7 +71,7 @@ public class InitActivity extends BaseActivity {
     private void initClass() {
         setAllowFullScreen(true);
         setSteepStatusBar(true);
-        mCacheManager = CacheManager.get(this);
+        mCacheManager = CacheManager.get(getApplicationContext());
         getNetInfo();
         if (isNotNet) {
             //准备离线启动
@@ -149,6 +149,10 @@ public class InitActivity extends BaseActivity {
         if (deviceId.replace("0", "") == "" || deviceId.isEmpty()) {
             deviceId = telNumber;
         }
+        if (screenHeight != 0 && screenWidth != 0) {
+            mCacheManager.put("width", screenWidth);
+            mCacheManager.put("height", screenHeight);
+        }
 
     }
 
@@ -188,6 +192,19 @@ public class InitActivity extends BaseActivity {
             mCacheManager.put("homeList", result);
             Log.d(getPackageName(), result);
         }
+        if (mCacheManager.getAsString("tel") != null && mCacheManager.getAsString("password") != null) {
+            result = baseNetwork.getInfoWithDataFormat("http://115.29.190.54:12345/mLogin.aspx?tel="
+                    + mCacheManager.getAsString("tel")
+                    + "&password="
+                    + mCacheManager.getAsString("password")
+                    + deviceId, getString(R.string.ase_key));
+            if (result.length() < 10) {
+                Log.d(getPackageName(), result + " 异常");
+            } else {
+                mCacheManager.put("UI", result);
+                Log.d(getPackageName(), result);
+            }
+        }
         EventBus.getDefault().post(new InitOKMsg());
 
     }
@@ -196,7 +213,7 @@ public class InitActivity extends BaseActivity {
     public void startNextActivity(InitOKMsg im) {
         //跳转
         Toast.makeText(InitActivity.this, "准备跳转", Toast.LENGTH_SHORT).show();
-        startActivity(mainActivity.class);
+        startActivity(MainActivity.class);
     }
 
     @SuppressLint("InflateParams")

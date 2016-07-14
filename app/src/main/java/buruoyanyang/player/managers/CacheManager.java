@@ -50,9 +50,9 @@ public class CacheManager {
 		return get(cacheDir, MAX_SIZE, MAX_COUNT);
 	}
 
-	public static CacheManager get(Context ctx, long max_sise, int max_count) {
+	public static CacheManager get(Context ctx, long max_size, int max_count) {
 		File f = new File(ctx.getCacheDir(), "CacheManager");
-		return get(f, max_sise, max_count);
+		return get(f, max_size, max_count);
 	}
 
 	public static CacheManager get(File cacheDir, long max_zise, int max_count) {
@@ -291,7 +291,7 @@ public class CacheManager {
 			try {
 				assert oos != null;
 				oos.close();
-			} catch (IOException e) {
+			} catch (IOException ignored) {
 			}
 		}
 	}
@@ -494,6 +494,7 @@ public class CacheManager {
 			}).start();
 		}
 
+		@SuppressWarnings("ResultOfMethodCallIgnored")
 		private void put(File file) {
 			int curCacheCount = cacheCount.get();
 			while (curCacheCount + 1 > countLimit) {
@@ -517,6 +518,7 @@ public class CacheManager {
 			lastUsageDates.put(file, currentTime);
 		}
 
+		@SuppressWarnings("ResultOfMethodCallIgnored")
 		private File get(String key) {
 			File file = newFile(key);
 			Long currentTime = System.currentTimeMillis();

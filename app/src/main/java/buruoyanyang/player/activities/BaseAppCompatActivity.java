@@ -1,9 +1,9 @@
 package buruoyanyang.player.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,13 +12,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-
 /**
  * buruoyanyang.player.activities
  * author xiaofeng
- * 16/7/6
+ * 16/7/14
  */
-public abstract class BaseActivity extends Activity implements View.OnClickListener {
+public abstract class BaseAppCompatActivity extends AppCompatActivity implements View.OnClickListener {
     //状态栏沉浸
     private boolean isSetStatusBar = true;
     //是否禁止旋转
@@ -216,68 +215,3 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
