@@ -1,6 +1,7 @@
 package buruoyanyang.player.views.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.shizhefei.view.indicator.IndicatorViewPager.IndicatorFragmentPagerAdapter;
 
 import buruoyanyang.player.R;
+import buruoyanyang.player.fragments.CateListFragment;
 import buruoyanyang.player.fragments.NoNetFragment;
 import buruoyanyang.player.fragments.RecommendFragment;
 import buruoyanyang.player.utils.ImageLoadUtils;
@@ -40,6 +42,7 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
         super(fragmentManager);
         mInflater = LayoutInflater.from(context);
         mContext = context;
+
         this.infoArray = infoArray;
     }
 
@@ -66,12 +69,23 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
 
     @Override
     public Fragment getFragmentForPage(int i) {
-        Bundle bundle = new Bundle();
-        bundle.putString("homeList", (String) infoArray.get(3));
-        bundle.putInt("screenWidth", (int) infoArray.get(8));
-        bundle.putInt("screenHeight", (int) infoArray.get(9));
-        Fragment fragment = new RecommendFragment();
-        fragment.setArguments(bundle);
+        Bundle bundle;
+        Fragment fragment;
+        if (i == 0) {
+            bundle = new Bundle();
+            bundle.putString("homeList", (String) infoArray.get(3));
+            bundle.putInt("screenWidth", (int) infoArray.get(8));
+            bundle.putInt("screenHeight", (int) infoArray.get(9));
+            fragment = new RecommendFragment();
+            fragment.setArguments(bundle);
+        } else {
+            bundle = new Bundle();
+            bundle.putString("cateList", (String) infoArray.get(7));
+            bundle.putInt("screenWidth", (int) infoArray.get(8));
+            bundle.putInt("screenHeight", (int) infoArray.get(9));
+            fragment = new CateListFragment();
+            fragment.setArguments(bundle);
+        }
         return fragment;
     }
 

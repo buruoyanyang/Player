@@ -30,6 +30,7 @@ public class ImageLoadUtils {
                 .override(oWidth, oHeight)
                 .error(errorDrawable)
                 .placeholder(errorDrawable)
+                .centerCrop()
                 .into(imageView);
     }
 }

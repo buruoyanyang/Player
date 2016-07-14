@@ -79,6 +79,7 @@ public class RecommendFragment extends BaseFragment {
         public void onRefreshBegin(PtrFrameLayout frame) {
             isRefresh = !isRefresh;
             EventBus.getDefault().post(new HotBeginMessage());
+
         }
 
         @Override
@@ -124,7 +125,6 @@ public class RecommendFragment extends BaseFragment {
     @Override
     public void fetchData() {
         //处理数据
-
-
+        EventBus.getDefault().post(new HotBeginMessage());
     }
 }
