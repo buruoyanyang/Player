@@ -25,6 +25,7 @@ public abstract class BaseFragment extends Fragment {
         prepareFetchData();
     }
 
+
     public abstract void fetchData();
 
     @Override
