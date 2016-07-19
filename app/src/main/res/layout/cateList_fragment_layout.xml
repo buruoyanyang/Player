@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/video_background">
 
     <TextView
         android:id="@+id/cate_help_tv0"
@@ -15,5 +16,4 @@
         android:layout_below="@+id/cate_help_tv0"
         android:numColumns="3">
     </GridView>
-
 </RelativeLayout>

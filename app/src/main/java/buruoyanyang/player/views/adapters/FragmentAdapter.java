@@ -71,7 +71,7 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
     public Fragment getFragmentForPage(int i) {
         Bundle bundle;
         Fragment fragment;
-        if (i == 0) {
+        if (i == 1) {
             bundle = new Bundle();
             bundle.putString("homeList", (String) infoArray.get(3));
             bundle.putInt("screenWidth", (int) infoArray.get(8));

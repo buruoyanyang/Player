@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import buruoyanyang.player.R;
-import buruoyanyang.player.messages.HotBeginMessage;
-import buruoyanyang.player.messages.HotOkMessage;
+import buruoyanyang.player.messages.HotBeginMsg;
+import buruoyanyang.player.messages.HotOkMsg;
 import buruoyanyang.player.models.HotsModel;
 import buruoyanyang.player.models.HotsModel.HomeEntity;
 import buruoyanyang.player.network.BaseNetwork;
@@ -78,7 +78,7 @@ public class RecommendFragment extends BaseFragment {
         @Override
         public void onRefreshBegin(PtrFrameLayout frame) {
             isRefresh = !isRefresh;
-            EventBus.getDefault().post(new HotBeginMessage());
+            EventBus.getDefault().post(new HotBeginMsg());
 
         }
 
@@ -89,7 +89,7 @@ public class RecommendFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void getHots(HotBeginMessage message) {
+    public void getHots(HotBeginMsg message) {
         jsonList.clear();
         Gson gson = new Gson();
         HotsModel hotsModel = gson.fromJson(homeList, HotsModel.class);
@@ -106,14 +106,15 @@ public class RecommendFragment extends BaseFragment {
                 jsonList.add(json);
             }
         }
-        EventBus.getDefault().post(new HotOkMessage());
+        EventBus.getDefault().post(new HotOkMsg());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setAdapter(HotOkMessage message) {
+    public void setAdapter(HotOkMsg message) {
         RecommendAdapter adapter = new RecommendAdapter(inflater, superContext, jsonList, nameList, isRefresh, height / 6, width * 2 / 5);
         recommendList.setAdapter(adapter);
         mPtrClassicFrameLayout.refreshComplete();
+
     }
 
     @Override
@@ -125,6 +126,6 @@ public class RecommendFragment extends BaseFragment {
     @Override
     public void fetchData() {
         //处理数据
-        EventBus.getDefault().post(new HotBeginMessage());
+        EventBus.getDefault().post(new HotBeginMsg());
     }
 }

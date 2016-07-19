@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ import static buruoyanyang.player.models.RecommendModel.RecommendsEntity;
  * author xiaofeng
  * 16/7/14
  */
-public class RecommendAdapter extends BaseAdapter {
+public class RecommendAdapter extends BaseAdapter implements View.OnClickListener {
     private LayoutInflater mInflater;
     private Context mContext;
     private List<String> mJsonList;
@@ -96,10 +97,18 @@ public class RecommendAdapter extends BaseAdapter {
                 //加载图片
                 textView.setText(list.get(loop).getName());
                 mLoader.load(mContext.getApplicationContext(), list.get(loop).getCover(), mWidth, mHeight, holdBD, imageView);
+                imageView.setTag(R.id.image_tag, list.get(loop).getId());
+                imageView.setOnClickListener(this);
             }
         }
 
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d("videoId", v.getTag(R.id.image_tag) + "");
+
     }
 
     @SuppressWarnings("unchecked")

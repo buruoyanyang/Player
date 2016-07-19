@@ -5,5 +5,5 @@ package buruoyanyang.player.messages;
  * author xiaofeng
  * 16/7/14
  */
-public class HotOkMessage {
+public class HotOkMsg {
 }

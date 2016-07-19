@@ -33,4 +33,5 @@ public class ImageLoadUtils {
                 .centerCrop()
                 .into(imageView);
     }
+
 }

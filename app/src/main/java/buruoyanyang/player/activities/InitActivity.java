@@ -28,6 +28,7 @@ import java.io.File;
 
 import buruoyanyang.player.R;
 import buruoyanyang.player.managers.CacheManager;
+import buruoyanyang.player.messages.CacheBeginMsg;
 import buruoyanyang.player.messages.InfoMsg;
 import buruoyanyang.player.messages.InitOKMsg;
 import buruoyanyang.player.models.LoginModel;
@@ -47,6 +48,7 @@ import buruoyanyang.player.utils.NetworkUtils;
 public class InitActivity extends BaseActivity {
 
     CacheManager mCacheManager;
+    NetworkUtils mNetworkUtils;
     private boolean isFirstInit;
     private boolean isNotNet = false;
     private String appDirPath = "";
@@ -56,6 +58,9 @@ public class InitActivity extends BaseActivity {
     private int screenWidth = 0;
     private String deviceId = "";
     private String telNumber = "";
+    private String tel;
+    private String password;
+    private boolean vip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,7 @@ public class InitActivity extends BaseActivity {
         setAllowFullScreen(true);
         setSteepStatusBar(true);
         mCacheManager = CacheManager.get(getApplicationContext());
+        mNetworkUtils = NetworkUtils.newNetwork();
         getNetInfo();
         if (isNotNet) {
             //准备离线启动
@@ -114,15 +120,26 @@ public class InitActivity extends BaseActivity {
                 String responseData = readUtils.readUI(file, getApplicationContext());
                 Gson gson = new Gson();
                 LoginModel loginModel = gson.fromJson(responseData, LoginModel.class);
-                String tel = loginModel.getTel();
-                String password = loginModel.getPassword();
-                boolean vip = loginModel.isVip();
-                //缓存
-                mCacheManager.put("tel", tel);
-                mCacheManager.put("password", password);
-                mCacheManager.put("vip", vip);
+                tel = loginModel.getTel();
+                password = loginModel.getPassword();
+                vip = loginModel.isVip();
             }
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void cacheInfo(CacheBeginMsg message) {
+        if (tel == null) {
+            tel = "0";
+        }
+        if (password == null) {
+            password = "0";
+        }
+        mCacheManager.put("tel", tel);
+        mCacheManager.put("password", password);
+        mCacheManager.put("vip", vip);
+        mCacheManager.put("width", screenWidth);
+        mCacheManager.put("height", screenHeight);
     }
 
     @SuppressWarnings("deprecation")
@@ -150,11 +167,11 @@ public class InitActivity extends BaseActivity {
             deviceId = telNumber;
         }
         if (screenHeight != 0 && screenWidth != 0) {
-            mCacheManager.put("width", screenWidth);
-            mCacheManager.put("height", screenHeight);
+            EventBus.getDefault().post(new CacheBeginMsg());
         }
 
     }
+
 
     private void initData() {
         EventBus.getDefault().post(new InfoMsg());
@@ -167,7 +184,7 @@ public class InitActivity extends BaseActivity {
         String result = baseNetwork.getInfoWithDataFormat("http://115.29.190.54:99/category.aspx?appid=" + appId + "&version=" + appVersion, getString(R.string.ase_key));
         if (result.length() < 10) {
             //异常
-            Log.d(getPackageName(), result + " 异常");
+            Log.d(getPackageName(), result + " 1异常");
         } else {
             mCacheManager.put("cateList", result);
             Log.d(getPackageName(), result);
@@ -175,7 +192,7 @@ public class InitActivity extends BaseActivity {
         result = baseNetwork.httpGetBase("http://115.29.190.54:99/idfa.aspx?idfa=" + deviceId);
         assert result != null;
         if (result.length() < 10) {
-            Log.d(getPackageName(), result + " 异常");
+            Log.d(getPackageName(), result + " 2异常");
             //异常
         } else {
             //处理
@@ -187,19 +204,19 @@ public class InitActivity extends BaseActivity {
         }
         result = baseNetwork.getInfoWithDataFormat("http://115.29.190.54:99/Home.aspx?appid=" + appId + "&version=" + appVersion, getString(R.string.ase_key));
         if (result.length() < 10) {
-            Log.d(getPackageName(), result + " 异常");
+            Log.d(getPackageName(), result + " 3异常");
         } else {
             mCacheManager.put("homeList", result);
             Log.d(getPackageName(), result);
         }
-        if (mCacheManager.getAsString("tel") != null && mCacheManager.getAsString("password") != null) {
+        if (tel != "0" && password != "0") {
             result = baseNetwork.getInfoWithDataFormat("http://115.29.190.54:12345/mLogin.aspx?tel="
-                    + mCacheManager.getAsString("tel")
+                    + tel
                     + "&password="
-                    + mCacheManager.getAsString("password")
+                    + password
                     + deviceId, getString(R.string.ase_key));
             if (result.length() < 10) {
-                Log.d(getPackageName(), result + " 异常");
+                Log.d(getPackageName(), result + " 4异常");
             } else {
                 mCacheManager.put("UI", result);
                 Log.d(getPackageName(), result);
@@ -214,6 +231,7 @@ public class InitActivity extends BaseActivity {
         //跳转
         Toast.makeText(InitActivity.this, "准备跳转", Toast.LENGTH_SHORT).show();
         startActivity(MainActivity.class);
+        finish();
     }
 
     @SuppressLint("InflateParams")
@@ -238,7 +256,7 @@ public class InitActivity extends BaseActivity {
     }
 
     private void getNetInfo() {
-        String netInfoStr = NetworkUtils.checkNetWork(this);
+        String netInfoStr = mNetworkUtils.checkNetWork(getApplicationContext());
         switch (netInfoStr) {
             case "WIFI":
                 isNotNet = false;
@@ -299,5 +317,6 @@ public class InitActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        Log.d("InitActivity", "destroy");
     }
 }

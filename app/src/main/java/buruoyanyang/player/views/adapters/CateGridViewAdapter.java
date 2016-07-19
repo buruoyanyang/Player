@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -23,7 +25,7 @@ import buruoyanyang.player.utils.ImageLoadUtils;
 /**
  * buruoyanyang.player.views.adapters
  */
-public class CateGridViewAdapter extends BaseAdapter {
+public class CateGridViewAdapter extends BaseAdapter implements View.OnClickListener {
 
     private LayoutInflater mInflater;
     private Context mContext;
@@ -59,7 +61,7 @@ public class CateGridViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -70,8 +72,16 @@ public class CateGridViewAdapter extends BaseAdapter {
         ImageView imageView = ViewHolder.get(convertView, R.id.video_image);
         TextView textView = ViewHolder.get(convertView, R.id.video_name);
         mLoadUtils.load(mContext.getApplicationContext(), mEntityList.get(position).getCover(), mWidth, mHeight, holdBD, imageView);
+        imageView.setTag(R.id.image_tag, mEntityList.get(position).getId());
+//        mLoadUtils.load(mContext.getApplicationContext(), "http://h.hiphotos.baidu.com/baike/pic/item/a686c9177f3e67092e15a66d3bc79f3df8dc550f.jpg", mWidth, mHeight, holdBD, imageView);
         textView.setText(mEntityList.get(position).getName());
+        imageView.setOnClickListener(this);
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d("imageView", v.getTag(R.id.image_tag) + "");
     }
 
     @SuppressWarnings("unchecked")

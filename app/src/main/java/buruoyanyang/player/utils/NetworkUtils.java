@@ -2,7 +2,6 @@ package buruoyanyang.player.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 
 /**
@@ -11,8 +10,20 @@ import android.net.NetworkInfo;
  * 16/7/7
  */
 public class NetworkUtils {
+
+    private static class Holder {
+        public static NetworkUtils sNetworkUtils = new NetworkUtils();
+    }
+
+    private NetworkUtils() {
+    }
+
+    public static NetworkUtils newNetwork() {
+        return Holder.sNetworkUtils;
+    }
+
     @SuppressWarnings("deprecation")
-    public static String checkNetWork(Context context) {
+    public String checkNetWork(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
         if (activeNetwork != null) {
@@ -27,4 +38,5 @@ public class NetworkUtils {
             return "NO";
         }
     }
+
 }

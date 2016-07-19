@@ -25,14 +25,15 @@ public class CateListFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.cate_list_fragment, container, false);
+        prepareFetchData(true);
+        View contentView = inflater.inflate(R.layout.catelist_fragment_layout, container, false);
         superContext = container.getContext();
         Bundle bundle = getArguments();
         cateString = bundle.getString("cateList");
         width = bundle.getInt("screenWidth");
         height = bundle.getInt("screenHeight");
         initFragment(contentView);
-        initCateGrid();
+//        initCateGrid();
         return contentView;
     }
 
@@ -48,7 +49,7 @@ public class CateListFragment extends BaseFragment {
 
     @Override
     public void fetchData() {
-
+        initCateGrid();
     }
 }
 
