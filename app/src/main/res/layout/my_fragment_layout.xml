@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/my_background">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/user_image"
+            android:layout_centerVertical="true"
+            android:src="@drawable/user_image"
+            app:riv_corner_radius="75dip"
+            app:riv_border_width="0dip"
+            app:riv_border_color="#333333"
+            app:riv_mutate_background="true"
+            app:riv_tile_mode="repeat"
+            app:riv_oval="false"
+            android:layout_centerHorizontal="true"/>
+        <Button
+            android:layout_width="110dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/user_image"
+            android:layout_centerHorizontal="true"
+            android:background="#00000000"
+            android:text="@string/login_or_register"
+            android:textColor="@color/md_blue_400"
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+    </RelativeLayout>
+
+
+</LinearLayout>

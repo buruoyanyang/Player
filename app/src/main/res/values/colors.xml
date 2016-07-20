@@ -3,6 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <drawable name="blue">#ff42a5f5</drawable>
+    <drawable name="grey">#ff616161</drawable>
+
+
+    <drawable name="red">#f00</drawable>
+    <drawable name="gray">#ccc</drawable>
+
 
     <color name="black_overlay">#66000000</color>
     <color name="md_red_50">#ffffebee</color>

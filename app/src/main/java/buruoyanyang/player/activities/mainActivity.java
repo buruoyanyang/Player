@@ -93,7 +93,7 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         IndicatorViewPager viewPager = new IndicatorViewPager(indicator, sViewPager);
         viewPager.setAdapter(new FragmentAdapter(MainActivity.this, getSupportFragmentManager(), infoArray));
         sViewPager.setCanScroll(true);
-        sViewPager.setOffscreenPageLimit(3);
+        sViewPager.setOffscreenPageLimit(2);
     }
 
 

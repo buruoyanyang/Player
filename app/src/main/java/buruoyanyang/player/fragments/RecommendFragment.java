@@ -2,6 +2,7 @@ package buruoyanyang.player.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class RecommendFragment extends BaseFragment {
         width = bundle.getInt("screenWidth");
         height = bundle.getInt("screenHeight");
         initClass(contentView);
+        Log.d("visible", getUserVisibleHint() + "");
         return contentView;
     }
 

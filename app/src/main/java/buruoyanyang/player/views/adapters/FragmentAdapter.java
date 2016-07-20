@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.shizhefei.view.indicator.IndicatorViewPager.IndicatorFragmentPagerAda
 
 import buruoyanyang.player.R;
 import buruoyanyang.player.fragments.CateListFragment;
+import buruoyanyang.player.fragments.MyFragment;
 import buruoyanyang.player.fragments.NoNetFragment;
 import buruoyanyang.player.fragments.RecommendFragment;
 import buruoyanyang.player.utils.ImageLoadUtils;
@@ -35,14 +37,12 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
             };
     private String[] tabNames = {"推荐", "频道", "我的"};
     private LayoutInflater mInflater;
-    private Context mContext;
+
     private SparseArray<Object> infoArray;
 
     public FragmentAdapter(Context context, FragmentManager fragmentManager, SparseArray<Object> infoArray) {
         super(fragmentManager);
         mInflater = LayoutInflater.from(context);
-        mContext = context;
-
         this.infoArray = infoArray;
     }
 
@@ -68,16 +68,19 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getFragmentForPage(int i) {
+    public Fragment getFragmentForPage(int position) {
         Bundle bundle;
         Fragment fragment;
-        if (i == 1) {
+        Log.e("fragment", position + "");
+        if (position == 0) {
             bundle = new Bundle();
             bundle.putString("homeList", (String) infoArray.get(3));
             bundle.putInt("screenWidth", (int) infoArray.get(8));
             bundle.putInt("screenHeight", (int) infoArray.get(9));
             fragment = new RecommendFragment();
             fragment.setArguments(bundle);
+        } else if (position == 2) {
+            fragment = new MyFragment();
         } else {
             bundle = new Bundle();
             bundle.putString("cateList", (String) infoArray.get(7));
