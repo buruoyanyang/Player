@@ -9,16 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import buruoyanyang.player.R;
+import buruoyanyang.player.interfaces.OnAdapterClickListener;
 import buruoyanyang.player.messages.HotBeginMsg;
 import buruoyanyang.player.messages.HotOkMsg;
 import buruoyanyang.player.models.HotsModel;
@@ -34,7 +38,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * author xiaofeng
  * 16/7/14
  */
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends BaseFragment implements OnAdapterClickListener {
     ListView recommendList;
     PtrClassicFrameLayout mPtrClassicFrameLayout;
     Context superContext;
@@ -45,8 +49,10 @@ public class RecommendFragment extends BaseFragment {
     List<HomeEntity> entityList;
     LayoutInflater inflater;
     List<String> nameList;
+    ProgressView mProgressView;
     int width;
     int height;
+    private OnAdapterClickListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,16 +69,26 @@ public class RecommendFragment extends BaseFragment {
         return contentView;
     }
 
+    public void setListener(OnAdapterClickListener listener) {
+        mListener = listener;
+    }
+
     private void initClass(View contentView) {
         jsonList = new ArrayList<>();
         nameList = new ArrayList<>();
         mNetWork = BaseNetwork.newNetWork();
         recommendList = (ListView) contentView.findViewById(R.id.recommend_list);
+        mProgressView = (ProgressView) contentView.findViewById(R.id.recommend_loading_on);
         inflater = (LayoutInflater) superContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPtrClassicFrameLayout = (PtrClassicFrameLayout) contentView.findViewById(R.id.recommend_refresh);
         mPtrClassicFrameLayout.setLastUpdateTimeRelateObject(superContext);
         mPtrClassicFrameLayout.disableWhenHorizontalMove(false);
         mPtrClassicFrameLayout.setPtrHandler(new RefreshHandler());
+    }
+
+    @Override
+    public void onClick(String msg,String where) {
+        mListener.onClick(msg,where);
     }
 
     class RefreshHandler extends PtrDefaultHandler {
@@ -114,8 +130,10 @@ public class RecommendFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void setAdapter(HotOkMsg message) {
         RecommendAdapter adapter = new RecommendAdapter(inflater, superContext, jsonList, nameList, isRefresh, height / 6, width * 2 / 5);
+        adapter.setListener(this);
         recommendList.setAdapter(adapter);
         mPtrClassicFrameLayout.refreshComplete();
+        mProgressView.setVisibility(View.GONE);
 
     }
 
@@ -127,6 +145,7 @@ public class RecommendFragment extends BaseFragment {
 
     @Override
     public void fetchData() {
+        mProgressView.setVisibility(View.VISIBLE);
         //处理数据
         EventBus.getDefault().post(new HotBeginMsg());
     }

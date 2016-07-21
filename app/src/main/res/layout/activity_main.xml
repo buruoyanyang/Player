@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
-    <include layout="@layout/title_bar_layout"
-        android:id="@+id/title_bar"/>
+    <!--<include layout="@layout/title_bar_layout"-->
+        <!--android:id="@+id/title_bar"/>-->
     <com.shizhefei.view.indicator.FixedIndicatorView
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -20,7 +20,7 @@
     <com.shizhefei.view.viewpager.SViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_bar"
+        android:layout_alignParentTop="true"
         android:layout_above="@id/indicator"
         android:id="@+id/pager"/>
 </RelativeLayout>

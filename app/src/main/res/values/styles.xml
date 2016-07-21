@@ -25,4 +25,21 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="LoadingProgressBarAppearance" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeSecondaryColor">@color/md_blue_400</item>
+        <item name="cpd_padding">5dp</item>
+        <item name="cpd_initialAngle">0</item>
+        <item name="cpd_maxSweepAngle">270</item>
+        <item name="cpd_minSweepAngle">1</item>
+        <item name="cpd_strokeSize">4dp</item>
+        <item name="cpd_strokeColor">@color/md_blue_400</item>
+        <item name="cpd_reverse">false</item>
+        <item name="cpd_rotateDuration">1000</item>
+        <item name="cpd_transformDuration">600</item>
+        <item name="cpd_keepDuration">200</item>
+        <item name="cpd_transformInterpolator">@android:anim/decelerate_interpolator</item>
+        <item name="pv_progressMode">indeterminate</item>
+        <item name="cpd_inAnimDuration">0</item>
+        <item name="cpd_outAnimDuration">@android:integer/config_mediumAnimTime</item>
+    </style>
 </resources>

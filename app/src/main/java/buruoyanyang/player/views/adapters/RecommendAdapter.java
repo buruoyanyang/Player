@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import buruoyanyang.player.R;
+import buruoyanyang.player.interfaces.OnAdapterClickListener;
 import buruoyanyang.player.models.RecommendModel;
 import buruoyanyang.player.utils.ImageLoadUtils;
 
@@ -38,6 +39,7 @@ public class RecommendAdapter extends BaseAdapter implements View.OnClickListene
     int mWidth;
     int mHeight;
     BitmapDrawable holdBD;
+    private OnAdapterClickListener mListener;
 
     @SuppressWarnings("deprecation")
     public RecommendAdapter(LayoutInflater layoutInflater, Context context, List<String> jsonList, List<String> nameList, boolean isRefresh, int oWidth, int oHeight) {
@@ -51,6 +53,10 @@ public class RecommendAdapter extends BaseAdapter implements View.OnClickListene
         mLoader = ImageLoadUtils.newImageLoader();
         Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.item_bg), oWidth, oHeight, false);
         holdBD = new BitmapDrawable(bitmap);
+    }
+
+    public void setListener(OnAdapterClickListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -108,6 +114,7 @@ public class RecommendAdapter extends BaseAdapter implements View.OnClickListene
     @Override
     public void onClick(View v) {
         Log.d("videoId", v.getTag(R.id.image_tag) + "");
+        mListener.onClick(v.getTag(R.id.image_tag) + "","Recommend");
 
     }
 

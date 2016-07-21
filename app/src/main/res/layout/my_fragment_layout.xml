@@ -1,42 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:background="@drawable/my_background">
+
+        <TextView
+            android:id="@+id/my_help_tv0"
+            android:layout_width="1dp"
+            android:layout_height="30dp"/>
+
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_image"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:id="@+id/user_image"
+            android:layout_below="@+id/my_help_tv0"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:src="@drawable/user_image"
-            app:riv_corner_radius="75dip"
-            app:riv_border_width="0dip"
             app:riv_border_color="#333333"
+            app:riv_border_width="0dip"
+            app:riv_corner_radius="75dip"
             app:riv_mutate_background="true"
-            app:riv_tile_mode="repeat"
             app:riv_oval="false"
-            android:layout_centerHorizontal="true"/>
+            app:riv_tile_mode="repeat"/>
+
+        <TextView
+            android:id="@+id/my_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/user_image"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/md_grey_600"
+            android:textSize="18sp"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/my_help_tv1"
+            android:layout_width="1dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/my_nickname"/>
+
         <Button
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="110dp"
             android:layout_height="45dp"
-            android:layout_below="@+id/user_image"
+            android:layout_below="@+id/my_help_tv1"
             android:layout_centerHorizontal="true"
             android:background="#00000000"
             android:text="@string/login_or_register"
             android:textColor="@color/md_blue_400"
-            style="?android:attr/borderlessButtonStyle"
             android:textSize="20sp"/>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/video_background">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/my_help_tv2"
+                    android:layout_width="1dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentBottom="true"/>
+
+                <include
+                    android:id="@+id/my_cache_layout"
+                    layout="@layout/my_list_adapter"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@id/my_help_tv2"/>
+
+                <TextView
+                    android:id="@+id/my_help_tv3"
+                    android:layout_width="1dp"
+                    android:layout_height="10dp"
+                    android:layout_below="@id/my_cache_layout"/>
+
+                <include
+                    android:id="@+id/my_download_layout"
+                    layout="@layout/my_list_adapter"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/my_help_tv3"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/my_help_tv4"
+                    android:layout_below="@+id/my_download_layout"/>
+                <include
+                    android:id="@+id/my_setting_layout"
+                    layout="@layout/my_list_adapter"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/my_help_tv4"/>
+            </RelativeLayout>
+
+        </ScrollView>
     </RelativeLayout>
 
 

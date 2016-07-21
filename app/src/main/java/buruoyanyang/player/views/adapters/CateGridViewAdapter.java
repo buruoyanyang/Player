@@ -1,6 +1,7 @@
 package buruoyanyang.player.views.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,6 +20,9 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import buruoyanyang.player.R;
+import buruoyanyang.player.activities.InitActivity;
+import buruoyanyang.player.activities.MainActivity;
+import buruoyanyang.player.interfaces.OnAdapterClickListener;
 import buruoyanyang.player.models.CateModel;
 import buruoyanyang.player.utils.ImageLoadUtils;
 
@@ -34,6 +38,7 @@ public class CateGridViewAdapter extends BaseAdapter implements View.OnClickList
     private List<CateModel.ContentEntity> mEntityList;
     private ImageLoadUtils mLoadUtils;
     BitmapDrawable holdBD;
+    private OnAdapterClickListener mListener;
 
     @SuppressWarnings("deprecation")
     public CateGridViewAdapter(LayoutInflater inflater, Context context, String cateList, int oWidth, int oHeight) {
@@ -47,6 +52,11 @@ public class CateGridViewAdapter extends BaseAdapter implements View.OnClickList
         mLoadUtils = ImageLoadUtils.newImageLoader();
         Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.item_bg), oWidth, oHeight, false);
         holdBD = new BitmapDrawable(bitmap);
+
+    }
+
+    public void setListener(OnAdapterClickListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -82,6 +92,8 @@ public class CateGridViewAdapter extends BaseAdapter implements View.OnClickList
     @Override
     public void onClick(View v) {
         Log.d("imageView", v.getTag(R.id.image_tag) + "");
+        mListener.onClick(v.getTag(R.id.image_tag) + "","CateList");
+//        mContext.startActivity(new Intent(mContext, InitActivity.class));
     }
 
     @SuppressWarnings("unchecked")

@@ -1,11 +1,9 @@
 package buruoyanyang.player.views.adapters;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -19,16 +17,15 @@ import com.shizhefei.view.indicator.IndicatorViewPager.IndicatorFragmentPagerAda
 import buruoyanyang.player.R;
 import buruoyanyang.player.fragments.CateListFragment;
 import buruoyanyang.player.fragments.MyFragment;
-import buruoyanyang.player.fragments.NoNetFragment;
 import buruoyanyang.player.fragments.RecommendFragment;
-import buruoyanyang.player.utils.ImageLoadUtils;
+import buruoyanyang.player.interfaces.OnAdapterClickListener;
 
 /**
  * buruoyanyang.player.views.adapters
  * author xiaofeng
  * 16/7/14
  */
-public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
+public class FragmentAdapter extends IndicatorFragmentPagerAdapter implements OnAdapterClickListener {
     private int[] tabIcons =
             {
                     R.drawable.main_tab_recommend_selector,
@@ -39,6 +36,7 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
     private LayoutInflater mInflater;
 
     private SparseArray<Object> infoArray;
+    private OnAdapterClickListener mListener;
 
     public FragmentAdapter(Context context, FragmentManager fragmentManager, SparseArray<Object> infoArray) {
         super(fragmentManager);
@@ -46,8 +44,8 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
         this.infoArray = infoArray;
     }
 
-    public FragmentAdapter(FragmentManager fragmentManager) {
-        super(fragmentManager);
+    public void setListener(OnAdapterClickListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -70,27 +68,36 @@ public class FragmentAdapter extends IndicatorFragmentPagerAdapter {
     @Override
     public Fragment getFragmentForPage(int position) {
         Bundle bundle;
-        Fragment fragment;
         Log.e("fragment", position + "");
         if (position == 0) {
+            RecommendFragment fragment = new RecommendFragment();
             bundle = new Bundle();
             bundle.putString("homeList", (String) infoArray.get(3));
             bundle.putInt("screenWidth", (int) infoArray.get(8));
             bundle.putInt("screenHeight", (int) infoArray.get(9));
-            fragment = new RecommendFragment();
             fragment.setArguments(bundle);
+            fragment.setListener(this);
+            return fragment;
         } else if (position == 2) {
-            fragment = new MyFragment();
+            MyFragment fragment = new MyFragment();
+            return fragment;
         } else {
+            CateListFragment fragment = new CateListFragment();
             bundle = new Bundle();
             bundle.putString("cateList", (String) infoArray.get(7));
             bundle.putInt("screenWidth", (int) infoArray.get(8));
             bundle.putInt("screenHeight", (int) infoArray.get(9));
-            fragment = new CateListFragment();
             fragment.setArguments(bundle);
+            fragment.setListener(this);
+            return fragment;
         }
-        return fragment;
     }
+
+    @Override
+    public void onClick(String msg,String where) {
+        mListener.onClick(msg,where);
+    }
+
 
     @SuppressWarnings("unchecked")
     static class ViewHolder {

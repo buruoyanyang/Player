@@ -2,6 +2,7 @@ package buruoyanyang.player.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 /**
  * buruoyanyang.player.fragments
@@ -32,6 +33,7 @@ public abstract class BaseFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
+//        Log.d("Base",getChildFragmentManager()+"");
         prepareFetchData();
     }
 

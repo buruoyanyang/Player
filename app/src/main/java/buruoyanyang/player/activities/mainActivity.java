@@ -1,10 +1,13 @@
 package buruoyanyang.player.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Switch;
 
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
@@ -12,17 +15,18 @@ import com.shizhefei.view.viewpager.SViewPager;
 
 
 import buruoyanyang.player.R;
+import buruoyanyang.player.interfaces.OnAdapterClickListener;
 import buruoyanyang.player.managers.CacheManager;
 import buruoyanyang.player.views.adapters.FragmentAdapter;
 
 
 //初始化主界面
 //请求cateList，加载图片
-public class MainActivity extends BaseAppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseAppCompatActivity implements View.OnClickListener, OnAdapterClickListener {
 
-    ImageButton titleSearch;
-    ImageButton titleDownload;
-    ImageButton titleHistory;
+    //    ImageButton titleSearch;
+//    ImageButton titleDownload;
+//    ImageButton titleHistory;
     CacheManager mCacheManager;
     String tel = "";
     String password = "";
@@ -46,6 +50,7 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         initClass();
 
     }
+
     private void getInfoFromCache() {
 
         tel = mCacheManager.getAsString("tel");
@@ -58,8 +63,8 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         weChatBanner = mCacheManager.getAsString("weChatBanner");
         UI = mCacheManager.getAsString("UI");
         cateList = mCacheManager.getAsString("cateList");
-        screenHeight = (int)mCacheManager.getAsObject("height");
-        screenWidth = (int)mCacheManager.getAsObject("width");
+        screenHeight = (int) mCacheManager.getAsObject("height");
+        screenWidth = (int) mCacheManager.getAsObject("width");
         infoArray = new SparseArray<>();
         infoArray.put(0, tel);
         infoArray.put(1, password);
@@ -69,20 +74,20 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         infoArray.put(5, weChatBanner);
         infoArray.put(6, UI);
         infoArray.put(7, cateList);
-        infoArray.put(8,screenWidth);
-        infoArray.put(9,screenHeight);
+        infoArray.put(8, screenWidth);
+        infoArray.put(9, screenHeight);
     }
 
     private void initClass() {
         setAllowFullScreen(true);
         setSteepStatusBar(true);
         //按键
-        titleSearch = (ImageButton) findViewById(R.id.title_app_search);
-        titleDownload = (ImageButton) findViewById(R.id.title_app_download);
-        titleHistory = (ImageButton) findViewById(R.id.title_app_history);
-        titleSearch.setOnClickListener(this);
-        titleHistory.setOnClickListener(this);
-        titleDownload.setOnClickListener(this);
+//        titleSearch = (ImageButton) findViewById(R.id.title_app_search);
+//        titleDownload = (ImageButton) findViewById(R.id.title_app_download);
+//        titleHistory = (ImageButton) findViewById(R.id.title_app_history);
+//        titleSearch.setOnClickListener(this);
+//        titleHistory.setOnClickListener(this);
+//        titleDownload.setOnClickListener(this);
         initTab();
     }
 
@@ -91,9 +96,11 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         SViewPager sViewPager = (SViewPager) findViewById(R.id.pager);
         Indicator indicator = (Indicator) findViewById(R.id.indicator);
         IndicatorViewPager viewPager = new IndicatorViewPager(indicator, sViewPager);
-        viewPager.setAdapter(new FragmentAdapter(MainActivity.this, getSupportFragmentManager(), infoArray));
+        FragmentAdapter adapter = new FragmentAdapter(MainActivity.this, getSupportFragmentManager(), infoArray);
+        adapter.setListener(this);
+        viewPager.setAdapter(adapter);
         sViewPager.setCanScroll(true);
-        sViewPager.setOffscreenPageLimit(2);
+//        sViewPager.setOffscreenPageLimit(2);
     }
 
 
@@ -119,6 +126,24 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        Log.d("mainActivity", view.getTag(R.id.image_tag) + "");
+    }
+
+    @Override
+    public void onClick(String msg, String where) {
+        if (where == "CateList") {
+            Log.d("MainActivity", msg);
+            Log.d("MainActivity", where);
+            Bundle bundle = new Bundle();
+            bundle.putString("ClickedId", msg);
+            Intent intent = new Intent(MainActivity.this, VideoListActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        } else if (where == "Recommend") {
+            Log.d("MainActivity", msg);
+            Log.d("MainActivity", where);
+        }
 
     }
 }

@@ -4,10 +4,18 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/video_background">
 
+    <include
+        android:id="@+id/cate_list_title_bar"
+        layout="@layout/title_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
     <TextView
         android:id="@+id/cate_help_tv0"
         android:layout_width="1dp"
-        android:layout_height="10dp"/>
+        android:layout_height="10dp"
+        android:layout_below="@+id/cate_list_title_bar"/>
 
     <GridView
         android:id="@+id/cate_grid"

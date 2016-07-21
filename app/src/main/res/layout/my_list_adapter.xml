@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/md_white">
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/blue_stroke"
+        android:id="@+id/my_blue_stroke"
+        android:focusable="false"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_cache"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/my_blue_stroke"
+        android:focusable="false"
+        android:textSize="20sp"
+        android:id="@+id/my_tv"/>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/my_next_icon"
+        android:padding="5dp"/>
+
+
+</RelativeLayout>
