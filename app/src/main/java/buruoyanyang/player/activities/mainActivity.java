@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Switch;
 
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
@@ -136,13 +134,18 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
             Log.d("MainActivity", where);
             Bundle bundle = new Bundle();
             bundle.putString("ClickedId", msg);
+            bundle.putString("where", where);
             Intent intent = new Intent(MainActivity.this, VideoListActivity.class);
             intent.putExtras(bundle);
+            mCacheManager.put("ClickedId", msg);
+            mCacheManager.put("where", where);
             startActivity(intent);
             finish();
         } else if (where == "Recommend") {
             Log.d("MainActivity", msg);
             Log.d("MainActivity", where);
+            mCacheManager.put("ClickedId", msg);
+            mCacheManager.put("where", where);
         }
 
     }

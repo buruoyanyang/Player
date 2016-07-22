@@ -52,7 +52,6 @@ public class CateGridViewAdapter extends BaseAdapter implements View.OnClickList
         mLoadUtils = ImageLoadUtils.newImageLoader();
         Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.item_bg), oWidth, oHeight, false);
         holdBD = new BitmapDrawable(bitmap);
-
     }
 
     public void setListener(OnAdapterClickListener listener) {
@@ -82,7 +81,7 @@ public class CateGridViewAdapter extends BaseAdapter implements View.OnClickList
         ImageView imageView = ViewHolder.get(convertView, R.id.video_image);
         TextView textView = ViewHolder.get(convertView, R.id.video_name);
         mLoadUtils.load(mContext.getApplicationContext(), mEntityList.get(position).getCover(), mWidth, mHeight, holdBD, imageView);
-        imageView.setTag(R.id.image_tag, mEntityList.get(position).getId());
+        imageView.setTag(R.id.image_tag, mEntityList.get(position).getCateId());
 //        mLoadUtils.load(mContext.getApplicationContext(), "http://h.hiphotos.baidu.com/baike/pic/item/a686c9177f3e67092e15a66d3bc79f3df8dc550f.jpg", mWidth, mHeight, holdBD, imageView);
         textView.setText(mEntityList.get(position).getName());
         imageView.setOnClickListener(this);
@@ -93,7 +92,6 @@ public class CateGridViewAdapter extends BaseAdapter implements View.OnClickList
     public void onClick(View v) {
         Log.d("imageView", v.getTag(R.id.image_tag) + "");
         mListener.onClick(v.getTag(R.id.image_tag) + "","CateList");
-//        mContext.startActivity(new Intent(mContext, InitActivity.class));
     }
 
     @SuppressWarnings("unchecked")
