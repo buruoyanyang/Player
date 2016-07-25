@@ -80,6 +80,10 @@ public class VideoListActivity extends BaseAppCompatActivity implements OnAdapte
         mCacheManager = CacheManager.get(getApplicationContext());
         mNetwork = BaseNetwork.newNetWork();
     }
+    public void initChannel()
+    {
+
+    }
 
     public void initData() {
         ClickedId = getBundleValue();
@@ -140,6 +144,7 @@ public class VideoListActivity extends BaseAppCompatActivity implements OnAdapte
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void VideoListOK(VideoListOkMsg msg) {
+        initChannel();
         VideosGridViewAdapter adapter = new VideosGridViewAdapter(mInflater, VideoListActivity.this, mContentEntityList, mChannelsEntityList, screenHeight / 6, screenWidth * 2 / 5, lastView);
         adapter.setListener(this);
         mGridView.setAdapter(adapter);
