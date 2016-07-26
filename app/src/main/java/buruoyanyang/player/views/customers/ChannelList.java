@@ -61,6 +61,7 @@ public class ChannelList extends AdapterView<ListAdapter> {
     protected Scroller mFlingTracker = new Scroller(getContext());
 
     //手势listener
+    private final GestureListener mGestureListener = new GestureListener();
 
     //识别手势
     private GestureDetector mGestureDetector;
@@ -149,6 +150,7 @@ public class ChannelList extends AdapterView<ListAdapter> {
         super(context, attrs);
         mEdgeGlowLeft = new EdgeEffectCompat(context);
         mEdgeGlowRight = new EdgeEffectCompat(context);
+        mGestureDetector = new GestureDetector(context, mGestureListener);
         //初始化手势
         bindGestureDetector();
         initView();

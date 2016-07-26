@@ -21,7 +21,10 @@ import buruoyanyang.player.messages.VideoListMsg;
 import buruoyanyang.player.messages.VideoListOkMsg;
 import buruoyanyang.player.models.VideoModel;
 import buruoyanyang.player.network.BaseNetwork;
+import buruoyanyang.player.views.adapters.ChannelAdapter;
 import buruoyanyang.player.views.adapters.VideosGridViewAdapter;
+import buruoyanyang.player.views.customers.ChannelData;
+import buruoyanyang.player.views.customers.ChannelList;
 import in.srain.cube.views.GridViewWithHeaderAndFooter;
 import in.srain.cube.views.loadmore.LoadMoreContainer;
 import in.srain.cube.views.loadmore.LoadMoreGridViewContainer;
@@ -52,6 +55,7 @@ public class VideoListActivity extends BaseAppCompatActivity implements OnAdapte
     List<String> videoList;
     int screenHeight;
     int screenWidth;
+    ChannelList mChannelList;
 
 
     @Override
@@ -79,10 +83,16 @@ public class VideoListActivity extends BaseAppCompatActivity implements OnAdapte
         mLoadMoreContainer.useDefaultHeader();
         mCacheManager = CacheManager.get(getApplicationContext());
         mNetwork = BaseNetwork.newNetWork();
+        mChannelList = (ChannelList) findViewById(R.id.video_list_channel);
     }
-    public void initChannel()
-    {
 
+    public void initChannel() {
+        ChannelData[] channels = new ChannelData[mChannelsEntityList.size()];
+        for (int i = 0; i < mChannelsEntityList.size(); i++) {
+            channels[i] = new ChannelData(String.valueOf((mChannelsEntityList.get(i).getCateId())), mChannelsEntityList.get(i).getName());
+        }
+        ChannelAdapter adapter = new ChannelAdapter(VideoListActivity.this, channels);
+        mChannelList.setAdapter(adapter);
     }
 
     public void initData() {
