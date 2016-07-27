@@ -42,8 +42,6 @@
             </in.srain.cube.views.GridViewWithHeaderAndFooter>
         </in.srain.cube.views.loadmore.LoadMoreGridViewContainer>
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
-
-
     <include
         android:id="@+id/video_list_title_bar"
         layout="@layout/title_bar_layout"
@@ -55,7 +53,7 @@
         android:layout_below="@+id/video_list_title_bar"
         android:id="@+id/video_list_channel">
     </buruoyanyang.player.views.customers.ChannelList>
-    
+
     <com.rey.material.widget.ProgressView
         android:id="@+id/video_list_loading_on"
         android:layout_width="48dp"
