@@ -2,10 +2,14 @@ package buruoyanyang.player.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.rey.material.widget.TabPageIndicator;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +34,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class VideoListActivity extends BaseAppCompatActivity implements OnAdapterClickListener {
+public class VideoListActivity extends BaseAppCompatActivity implements OnAdapterClickListener ,ViewPager.OnPageChangeListener{
 
     String ClickedId = "";
     String lastView = "";
@@ -80,10 +84,7 @@ public class VideoListActivity extends BaseAppCompatActivity implements OnAdapte
         mCacheManager = CacheManager.get(getApplicationContext());
         mNetwork = BaseNetwork.newNetWork();
     }
-    public void initChannel()
-    {
 
-    }
 
     public void initData() {
         ClickedId = getBundleValue();
@@ -155,8 +156,41 @@ public class VideoListActivity extends BaseAppCompatActivity implements OnAdapte
         }
     }
 
+    public void initChannel() {
+        if (mChannelsEntityList.size() != 0) {
+            String[] channelNames = new String[mChannelsEntityList.size()];
+            for (int i = 0; i < mChannelsEntityList.size(); i++) {
+                channelNames[i] = mChannelsEntityList.get(i).getName();
+            }
+            FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getSupportFragmentManager(), channelNames);
+            ViewPager pager = (ViewPager) findViewById(R.id.pager);
+            pager.setAdapter(adapter);
+            TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+            indicator.setViewPager(pager);
+            indicator.setOnPageChangeListener(this);
+        }
+    }
+
     @Override
     public void onClick(String msg, String where) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        //处理channel选择行为
+        //请求网络
+        defaultKind = mChannelsEntityList.get(position).getKindId();
+        EventBus.getDefault().post(new VideoListMsg());
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 

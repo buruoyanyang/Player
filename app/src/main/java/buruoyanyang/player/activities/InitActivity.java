@@ -163,7 +163,7 @@ public class InitActivity extends BaseActivity {
         if (tm.getLine1Number() != "") {
             telNumber = tm.getLine1Number();
         }
-        if (deviceId.replace("0", "") == "" || deviceId.isEmpty()) {
+        if (deviceId.replace("0", "") != "" || !deviceId.isEmpty()) {
             deviceId = telNumber;
         }
         if (screenHeight != 0 && screenWidth != 0) {

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -38,7 +39,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * author xiaofeng
  * 16/7/14
  */
-public class RecommendFragment extends BaseFragment implements OnAdapterClickListener {
+public class RecommendFragment extends BaseFragment implements OnAdapterClickListener ,View.OnClickListener{
     ListView recommendList;
     PtrClassicFrameLayout mPtrClassicFrameLayout;
     Context superContext;
@@ -53,6 +54,10 @@ public class RecommendFragment extends BaseFragment implements OnAdapterClickLis
     int width;
     int height;
     private OnAdapterClickListener mListener;
+    ImageButton titleSearch;
+    ImageButton titleDownload;
+    ImageButton titleHistory;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +79,12 @@ public class RecommendFragment extends BaseFragment implements OnAdapterClickLis
     }
 
     private void initClass(View contentView) {
+        titleSearch = (ImageButton) contentView.findViewById(R.id.title_app_search);
+        titleDownload = (ImageButton) contentView.findViewById(R.id.title_app_download);
+        titleHistory = (ImageButton) contentView.findViewById(R.id.title_app_history);
+        titleDownload.setVisibility(View.INVISIBLE);
+        titleSearch.setVisibility(View.INVISIBLE);
+        titleHistory.setVisibility(View.INVISIBLE);
         jsonList = new ArrayList<>();
         nameList = new ArrayList<>();
         mNetWork = BaseNetwork.newNetWork();
@@ -89,6 +100,11 @@ public class RecommendFragment extends BaseFragment implements OnAdapterClickLis
     @Override
     public void onClick(String msg,String where) {
         mListener.onClick(msg,where);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     class RefreshHandler extends PtrDefaultHandler {

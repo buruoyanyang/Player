@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import buruoyanyang.player.R;
 import buruoyanyang.player.interfaces.OnAdapterClickListener;
@@ -17,7 +18,7 @@ import buruoyanyang.player.views.adapters.CateGridViewAdapter;
  * author xhf1
  * 16/7/14
  */
-public class CateListFragment extends BaseFragment implements OnAdapterClickListener {
+public class CateListFragment extends BaseFragment implements OnAdapterClickListener,View.OnClickListener {
     Context superContext;
     GridView mGridView;
     LayoutInflater mInflater;
@@ -26,6 +27,9 @@ public class CateListFragment extends BaseFragment implements OnAdapterClickList
     private int height;
     View contextView;
     private OnAdapterClickListener mListener;
+    ImageButton titleSearch;
+    ImageButton titleDownload;
+    ImageButton titleHistory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +51,12 @@ public class CateListFragment extends BaseFragment implements OnAdapterClickList
     private void initFragment() {
         mGridView = (GridView) contextView.findViewById(R.id.cate_grid);
         mInflater = (LayoutInflater) superContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        titleSearch = (ImageButton) contextView.findViewById(R.id.title_app_search);
+        titleDownload = (ImageButton) contextView.findViewById(R.id.title_app_download);
+        titleHistory = (ImageButton) contextView.findViewById(R.id.title_app_history);
+        titleSearch.setOnClickListener(this);
+        titleHistory.setOnClickListener(this);
+        titleDownload.setOnClickListener(this);
     }
 
     private void initCateGrid() {
@@ -65,6 +75,11 @@ public class CateListFragment extends BaseFragment implements OnAdapterClickList
     public void onClick(String msg, String where) {
         Log.d("Fragment", msg);
         mListener.onClick(msg, where);
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

@@ -12,7 +12,7 @@
         android:id="@+id/video_list_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/video_list_channel"
+        android:layout_below="@+id/indicator"
         cube_ptr:ptr_duration_to_close="300"
         cube_ptr:ptr_duration_to_close_header="2000"
         cube_ptr:ptr_keep_header_when_refresh="true"
@@ -49,12 +49,18 @@
         layout="@layout/title_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <buruoyanyang.player.views.customers.ChannelList
+    <com.rey.material.widget.TabPageIndicator
         android:layout_width="match_parent"
         android:layout_height="20dp"
+        android:id="@+id/indicator"
         android:layout_below="@+id/video_list_title_bar"
-        android:id="@+id/video_list_channel">
-    </buruoyanyang.player.views.customers.ChannelList>
+        app:tpi_mode="scroll">
+    </com.rey.material.widget.TabPageIndicator>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"/>
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/video_list_loading_on"

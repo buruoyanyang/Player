@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 
@@ -24,11 +23,6 @@ public class ChannelAdapter extends ArrayAdapter<ChannelData> {
     public ChannelAdapter(Context context, ChannelData[] channels) {
         super(context, R.layout.channel_adapter, channels);
         this.mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
     }
 
     static class ViewHolder {

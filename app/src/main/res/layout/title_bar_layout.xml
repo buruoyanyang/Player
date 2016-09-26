@@ -81,8 +81,6 @@
             android:layout_toLeftOf="@+id/title_help_tv4"
             android:id="@+id/title_app_history"/>
     </RelativeLayout>
-
-
 </RelativeLayout>
 
 

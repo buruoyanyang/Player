@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageButton;
+
 
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
@@ -22,7 +24,7 @@ import buruoyanyang.player.views.adapters.FragmentAdapter;
 //请求cateList，加载图片
 public class MainActivity extends BaseAppCompatActivity implements View.OnClickListener, OnAdapterClickListener {
 
-    //    ImageButton titleSearch;
+//    ImageButton titleSearch;
 //    ImageButton titleDownload;
 //    ImageButton titleHistory;
     CacheManager mCacheManager;
@@ -80,17 +82,23 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         setAllowFullScreen(true);
         setSteepStatusBar(true);
         //按键
+//        ImageButton titleSearch = (ImageButton) findViewById(R.id.title_app_search);
+//        ImageButton titleDownload = (ImageButton) findViewById(R.id.title_app_download);
+//        ImageButton titleHistory = (ImageButton) findViewById(R.id.title_app_history);
+//        titleSearch.setOnClickListener(this);
+//        titleDownload.setOnClickListener(this);
+//        titleHistory.setOnClickListener(this);
+        initTab();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private void initTab() {
 //        titleSearch = (ImageButton) findViewById(R.id.title_app_search);
 //        titleDownload = (ImageButton) findViewById(R.id.title_app_download);
 //        titleHistory = (ImageButton) findViewById(R.id.title_app_history);
 //        titleSearch.setOnClickListener(this);
 //        titleHistory.setOnClickListener(this);
 //        titleDownload.setOnClickListener(this);
-        initTab();
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    private void initTab() {
         SViewPager sViewPager = (SViewPager) findViewById(R.id.pager);
         Indicator indicator = (Indicator) findViewById(R.id.indicator);
         IndicatorViewPager viewPager = new IndicatorViewPager(indicator, sViewPager);
@@ -119,7 +127,6 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
 
     @Override
     public void initView(View view) {
-
     }
 
     @Override
