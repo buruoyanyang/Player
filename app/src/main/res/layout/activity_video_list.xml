@@ -42,8 +42,6 @@
             </in.srain.cube.views.GridViewWithHeaderAndFooter>
         </in.srain.cube.views.loadmore.LoadMoreGridViewContainer>
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
-
-
     <include
         android:id="@+id/video_list_title_bar"
         layout="@layout/title_bar_layout"
@@ -51,8 +49,12 @@
         android:layout_height="wrap_content"/>
     <com.rey.material.widget.TabPageIndicator
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="20dp"
         android:id="@+id/indicator"
+=======
+        android:layout_height="40dp"
+>>>>>>> origin/master
         android:layout_below="@+id/video_list_title_bar"
         app:tpi_mode="scroll">
     </com.rey.material.widget.TabPageIndicator>
